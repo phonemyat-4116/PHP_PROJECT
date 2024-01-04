@@ -1,20 +1,20 @@
 <?php
     class DB{
-        public $host = "localhost";
-        public $dbname = "first";
-        public $user = "root";
-        public $password = "admin123";
-        public $pdo;
+        protected static $host = "localhost";
+        protected static $dbname = "first";
+        protected static $user = "root";
+        protected static $password = "admin123";
+        public static $pdo;
 
-        public function __construct()
+        public static function connect()
         {
             try{
-                $pdo = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->user, $this->password);
+                $pdo = new PDO("mysql:host=" . self::$host . ";dbname=" . self::$dbname, self::$user, self::$password);
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $this->pdo = $pdo;
+                self::$pdo = $pdo;
             }
             catch(PDOException $e){
-                $e->getMessage();
+                echo $e->getMessage();
             }
         }
     }
