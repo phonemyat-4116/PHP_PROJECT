@@ -1,17 +1,70 @@
 <?php
     require_once "database.php";
-
     class Model
     {
+        public $table;
         function __construct()
         {
+            // calling static method 
             DB::connect();
         }
 
-        public function all(){
-            return DB::$pdo->query("SELECT * FROM products")->fetchAll(PDO::FETCH_OBJ);
+        protected function query($sql, $params = [])
+        {
+            $statement = DB::$pdo->prepare($sql);
+            $statement->execute($params);
+            return $statement;
+        }
+
+        public function all()
+        {
+            // return DB::$pdo->query("SELECT * FROM {$this->table}")->fetchAll(PDO::FETCH_OBJ);
+            $sql = "SELECT * FROM {$this->table}";
+            return $this->query($sql)->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        public function first($column)
+        {
+            $sql = "SELECT * FROM {$this->table} WHERE id = ?";
+            return $this->query($sql, [$column])->fetch(PDO::FETCH_OBJ);
+        }
+
+        public function create($data)
+        {
+            $column = implode(", ", array_keys($data));
+            $params = ":" . implode(", :", array_keys($data));
+            $sql = "
+                INSERT INTO {$this->table} 
+                    ($column, created_at, updated_at) 
+                VALUES 
+                    ($params, NOW(), NOW())
+            ";
+            $this->query($sql, $data);
+        }
+
+        public function update($data, $column)
+        {
+            $clause = "";
+            foreach($data as $key => $value){
+                $clause .= "$key = :$key, ";
+            }
+            $sql = "
+            UPDATE {$this->table}
+                SET $clause created_at = NOW()
+            WHERE id = :id
+            ";
+            $data["id"] = $column;
+            return $this->query($sql, $data);
+        }
+
+        public function destroy($column)
+        {
+            $sql = "DELETE FROM {$this->table} WHERE id = ?";
+            $this->query($sql, [$column]);
         }
     }
 
-    $model = new Model();
-    var_dump($model->all());
+    // INSERT INTO products 
+    //     (name, price, stock, description, category_id, created_at, updated_at)
+    // VALUES 
+    //     (:name, :price, :stock, :description, :category_id, now(), now());

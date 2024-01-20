@@ -1,11 +1,16 @@
 <?php
-    require_once("../helper/database.php");
+    require_once "../helper/database.php";
+    require_once "../model/Category.php";
     
     class CategoriesController extends DB{
         function index(){
-            $statement = $this->pdo->query('select * from category');
-            $products = $statement->fetchAll(PDO::FETCH_OBJ);
-            return $products;
+            try{
+                $category = new Category();
+                return $category->all();
+            }
+            catch(Exception $e){
+                echo $e->getMessage();
+            }
         }
 
         function store($request){

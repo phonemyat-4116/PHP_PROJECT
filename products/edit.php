@@ -56,9 +56,7 @@
                             </select>
                         </div>
 
-                        <div class="col-12">
-                            <input type="hidden" id="created_at" name="created_at" class="form-control form-control-sm" value="<?php echo $product->created_at ?>" autocomplete="off" required/>
-                        </div>
+                    
                         
                         <div class="d-flex">
                             <button class="btn btn-primary btn-sm w-100 mt-3 me-2 p-2">Save</button>

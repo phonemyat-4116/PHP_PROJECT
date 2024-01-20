@@ -2,7 +2,7 @@
     // require 'connect.php';
     require_once '../controller/ProductController.php';
     $controller = new ProductController();
-    $products = $controller->index();
+    die($controller->index());
 ?>
 
 <!DOCTYPE html>
