@@ -2,7 +2,8 @@
     require_once "../helper/database.php";
     require_once "../model/Category.php";
     
-    class CategoriesController extends DB{
+    class CategoriesController extends DB
+    {
         function index(){
             try{
                 $category = new Category();

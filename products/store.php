@@ -1,7 +1,8 @@
 <?php
     // require 'connect.php';
-    // die(var_dump($_POST));
     require_once '../controller/ProductController.php';
+    $_POST["image"] = $_FILES["image"];
+    // die(var_dump($_POST));
     $controller = new ProductController();
     $controller->store($_POST);
     

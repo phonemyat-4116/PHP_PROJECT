@@ -1,8 +1,11 @@
 <?php
     // require 'connect.php';
     require_once '../controller/ProductController.php';
+
     $controller = new ProductController();
-    die($controller->index());
+    $products = $controller->index()["products"];
+    $categories = $controller->index()["categories"];
+    // die(var_dump($products));  
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +39,7 @@
                             <th>Price</th>
                             <th>Stock</th>
                             <th>Description</th>
-                            <th>Category-ID</th>
+                            <th>Category Name</th>
                             <th>Manage</th>
                         </tr>
                     </thead>
@@ -48,7 +51,15 @@
                             <td><?php echo $product->price ?></td>
                             <td><?php echo $product->stock ?></td>
                             <td><?php echo $product->description ?></td>
-                            <td><?php echo $product->category_id ?></td>
+                            <td>
+                                <?php 
+                                    foreach($categories as $category){
+                                        if($product->category_id === $category->id){
+                                            echo $category->name;
+                                        }
+                                    }
+                                ?>
+                            </td>
                             <td>
                                 <a href="edit.php?id=<?php echo $product->id ?>" class="btn btn-primary btn-sm">Edit</a>
                                 <a href="destroy.php?id=<?php echo $product->id ?>" class="btn btn-danger btn-sm">Delete</a>

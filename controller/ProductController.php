@@ -3,11 +3,15 @@
     require_once "../model/Product.php";
     require_once "../model/Category.php";
     require_once "../helper/redirect.php";
+    require_once "../helper/storage.php";
 
-    class ProductController extends DB{
+    class ProductController
+    {
         // store 
         public function store($request){
             try{
+                // storing in database
+                $request["image"] = Storage::upload($request["image"]);   
                 $product_Model = new Product();
                 $product_Model->create($request);
                 redirect_Product("index.php");
@@ -24,7 +28,8 @@
         public function index(){
             try{
                 $products = new Product();
-                echo json_encode($products->all());
+                $categories = new Category();
+                return ["products" => $products->all(), "categories" => $categories->all()];
             }
             catch(Exception $e){
                 echo $e->getMessage();

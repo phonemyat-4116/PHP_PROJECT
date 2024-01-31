@@ -21,19 +21,24 @@
                 <p class="text-center text-muted lead">Let's welcome to new prodcuts</p>
             
                 <!-- form start  -->
-                <form action="store.php" method="POST">
+                <form action="store.php" method="POST" enctype="multipart/form-data">
                     <div class="row justify-content-center">
                         <div class="col-12">
                             <label for="name" class="text-uppercase my-2" style="font-weight: bold;">Name</label>
                             <input type="text" id="name" name="name" class="form-control form-control-sm" autocomplete="off" required/>
                         </div>
 
-                        <div class="col-12 my-3">
+                        <div class="col-12">
+                            <label for="file" class="text-uppercase my-2" style="font-weight: bold;">Image</label>
+                            <input type="file" id="image" name="image" class="form-control form-control-sm" autocomplete="off" required/>
+                        </div>
+
+                        <div class="col-12">
                             <label for="price" class="text-uppercase my-2" style="font-weight: bold;">Price</label>
                             <input type="text" id="price" name="price" class="form-control form-control-sm" autocomplete="off" required/>
                         </div>
 
-                        <div class="col-12 mb-4">
+                        <div class="col-12">
                             <label for="stock" class="text-uppercase my-2" style="font-weight: bold;">Stock</label>
                             <input type="text" id="stock" name="stock" class="form-control form-control-sm" autocomplete="off" required/>
                         </div>
@@ -43,7 +48,7 @@
                             <textarea id="description" name="description" class="form-control form-control-sm" autocomplete="off" required></textarea>
                         </div>
 
-                        <div class="col-12 mb-4">
+                        <div class="col-12 mb-2">
                             <label for="category_id" class="text-uppercase my-2" style="font-weight: bold;">Category</label>
                             <select class="form-select" id="category_id" name="category_id" required aria-label="Default select example">
                                 <option selected>Open this select menu</option>
