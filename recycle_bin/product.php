@@ -2,8 +2,9 @@
     require_once "../controller/RecycleBinController.php";
     $controller = new RecycleBinController();
     $products = $controller->product();
-    // die(json_encode($products))
+    // die(var_dump($products));
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,10 +34,10 @@
                         <tr class="text-center">
                             <th>ID</th>
                             <th>Name</th>
+                            <th>Image</th>
                             <th>Price</th>
                             <th>Stock</th>
                             <th>Description</th>
-                            <th>Category-ID</th>
                             <th>Deleted_At</th>
                             <th>Manage</th>
                         </tr>
@@ -46,13 +47,13 @@
                         <tr class="text-center">
                             <td><?php echo $product->id ?></td>
                             <td><?php echo $product->name ?></td>
+                            <td><img style="width: 100px; height: 100px; border-radius: 10px" src="<?php echo $product->image?>" alt="image"></td>
                             <td><?php echo $product->price ?></td>
                             <td><?php echo $product->stock ?></td>
                             <td><?php echo $product->description ?></td>
-                            <td><?php echo $product->category_id ?></td>
                             <td><?php echo $product->deleted_at ?></td>
                             <td>
-                                <a href="#" class="btn btn-success btn-sm">Restore</a>
+                                <a href="restore.php?id=<?php echo $product->id ?>" class="btn btn-success btn-sm">Restore</a>
                                 <a href="destroy.php?id=<?php echo $product->id ?>" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                         </tr>

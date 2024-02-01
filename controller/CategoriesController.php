@@ -1,6 +1,7 @@
 <?php
     require_once "../helper/database.php";
     require_once "../model/Category.php";
+    require_once "../helper/redirect.php";
     
     class CategoriesController extends DB
     {
@@ -16,19 +17,9 @@
 
         function store($request){
             try{
-                $statement = $this->pdo->prepare('
-                    INSERT INTO categories (name, created_at, updated_at)
-                    VALUES (:name, NOW(), NOW());
-                ');
-                $statement->bindParam(':name', $request["name"]);
-                if($statement->execute()){
-                    header("Location: http://localhost:8080/categories/index.php");
-                }else{
-                    throw new Exception("Error Occurs creating categories");
-                }
-            }
-            catch(PDOException $e){
-                echo $e->getMessage();
+                $category = new Category();
+                $category->create($request);
+                redirect_Category('index.php');
             }
             catch(Exception $e){
                 echo $e->getMessage();
@@ -38,37 +29,19 @@
         function edit($id)
         {
             try {
-                $statement = $this->pdo->prepare("SELECT * FROM category WHERE id = :id");
-                $statement->bindParam(":id", $id);
-                if ($statement->execute()) {
-                    $category = $statement->fetch(PDO::FETCH_OBJ); 
-                    return $category;
-                } else {
-                    throw new Exception("Error!");
-                }
+                $category = new Category();
+                return $category->first($id);
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
         }
 
-        public function update ($request, $id)
+        public function update($request, $id)
         {
             try {
-                $statement = $this->pdo->prepare("
-                    update category 
-                        set 
-                            name = :name
-                        where id = :id
-                "); 
-                $statement->bindParam(":id", $id);
-                $statement->bindParam(":name", $request["name"]);
-
-                if ($statement->execute())
-                {
-                    header("Location: http://localhost:8080/category/index.php");
-                } else {
-                    throw new Exception("Error while updating product!");
-                }
+                $category = new Category();
+                $category->update($request, $id);
+                redirect_Category('index.php');
             } catch (Exception $e) {
                 echo $e->getMessage();
             }

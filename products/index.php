@@ -5,7 +5,7 @@
     $controller = new ProductController();
     $products = $controller->index()["products"];
     $categories = $controller->index()["categories"];
-    // die(var_dump($products));  
+    // echo die(json_encode($controller->index()));
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +35,7 @@
                     <thead>
                         <tr class="text-center">
                             <th>ID</th>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Price</th>
                             <th>Stock</th>
@@ -47,6 +48,7 @@
                         <?php foreach($products as $product) : ?>
                         <tr class="text-center">
                             <td><?php echo $product->id ?></td>
+                            <td><img style="width: 100px; height: 100px; border-radius: 10px" src="<?php echo $product->image?>" alt="image"></td>
                             <td><?php echo $product->name ?></td>
                             <td><?php echo $product->price ?></td>
                             <td><?php echo $product->stock ?></td>

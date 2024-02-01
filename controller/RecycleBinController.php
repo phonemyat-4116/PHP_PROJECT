@@ -1,31 +1,40 @@
 <?php
     require_once "../helper/database.php";
+    require_once "../model/Product.php";
+    require_once "../helper/redirect.php";
 
     class RecycleBinController extends DB{
         public function product(){
-            $statement = $this->pdo->query(
-                '
-                SELECT * FROM products
-                WHERE deleted_at IS NOT NULL;
-                '
-            );
-            return $statement->fetchAll(PDO::FETCH_OBJ);
+            try{
+                $products = new Product();
+                return $products->allWithSoftDelete();
+            }
+            catch(Exception $e) 
+            {
+                echo $e->getMessage();
+            }
         }
 
         public function destroy($id){
             try{
-                $statement = $this->pdo->prepare("
-                DELETE FROM products
-                WHERE id = :id;
-                ");
-                $statement->bindParam(":id",$id);
-                if($statement->execute()){
-                    header("Location: http://localhost:8080/recycle_bin/product.php");
-                }else{
-                    throw new Exception("Error while deleting");
-                }
+                $products = new Product();
+                $products->delete($id);
+                redirect_Recycle('product.php');
             }
             catch(Exception $e){
+                echo $e->getMessage();
+            }
+        }
+
+        public function restore($id) 
+        {
+            try{
+                $products = new Product();
+                $products->recoverDelete($id);
+                redirect_Recycle('product.php');
+            }
+            catch(Exception $e)
+            {
                 echo $e->getMessage();
             }
         }

@@ -16,9 +16,6 @@
                 $product_Model->create($request);
                 redirect_Product("index.php");
             }
-            catch(PDOException $e){
-                echo $e->getMessage();
-            }
             catch(Exception $e){
                 echo $e->getMessage();
             }
@@ -66,7 +63,7 @@
         public function destroy($id){
             try{
                 $product_Model = new Product();
-                $product_Model->destroy($id);
+                $product_Model->softDelete($id);
                 redirect_Product("index.php");
             }
             catch(PDOException $e){
