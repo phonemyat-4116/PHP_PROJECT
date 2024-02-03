@@ -62,6 +62,7 @@
 
         public function destroy($id){
             try{
+                
                 $product_Model = new Product();
                 $product_Model->softDelete($id);
                 redirect_Product("index.php");

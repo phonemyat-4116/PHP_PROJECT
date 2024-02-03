@@ -18,9 +18,25 @@
 
         public function all()
         {
-            // return DB::$pdo->query("SELECT * FROM {$this->table}")->fetchAll(PDO::FETCH_OBJ);
-            $sql = "SELECT * FROM {$this->table}";
+            $columnsQuery = "EXPLAIN {$this->table};";
+            $result = $this->query($columnsQuery);
+            $deletedAtColumnExits = false;
+            foreach($result as $row){
+                if($row['Field'] === 'deleted_at') {
+                    $deletedAtColumnExits = true;
+                    break;
+                }
+            }
+
+            if($deletedAtColumnExits) {
+                $sql = "SELECT * FROM {$this->table} WHERE deleted_at IS NULL";
+            }else{
+                $sql = "SELECT * FROM {$this->table}";
+            }
             return $this->query($sql)->fetchAll(PDO::FETCH_OBJ);
+
+            // die(var_dump($result->fetchAll(PDO::FETCH_OBJ)));
+            // echo die(json_encode($result->fetchAll(PDO::FETCH_OBJ)));
         }
 
         public function first($column)

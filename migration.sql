@@ -16,7 +16,7 @@ CREATE TABLE category (
      name VARCHAR(100) NOT NULL,
      created_at DATETIME NOT NULL,
      updated_at DATETIME NOT NULL
-     );
+);
 
 
 INSERT INTO category (name, created_at, updated_at)
