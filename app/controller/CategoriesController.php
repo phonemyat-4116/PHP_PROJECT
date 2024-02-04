@@ -1,14 +1,15 @@
 <?php
-    require_once "../helper/database.php";
-    require_once "../model/Category.php";
-    require_once "../helper/redirect.php";
-    
+    // require_once "../helper/database.php";
+    // require_once "../model/Category.php";
+    // require_once "../helper/redirect.php";
+    require_once __DIR__ . "/../../vendor/autoload.php";
+
     class CategoriesController extends DB
     {
         function index(){
             try{
                 $category = new Category();
-                return $category->all();
+                View::renderView('index', $category->all());
             }
             catch(Exception $e){
                 echo $e->getMessage();

@@ -1,0 +1,15 @@
+{
+    "name": "phonemyatthu/php_projects",
+    "authors": [
+        {
+            "name": "phonemyatthu",
+            "email": "myat57116@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "classmap": [
+            "app/", "helper/"
+        ]
+    }
+}

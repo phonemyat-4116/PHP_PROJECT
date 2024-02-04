@@ -1,7 +1,5 @@
 <?php
-    require_once('../controller/CategoriesController.php');
-    $controller = new CategoriesController();
-    $products = $controller->index();
+    require_once __DIR__ . "/../../vendor/autoload.php";
 ?>
 
 <!DOCTYPE html>
@@ -37,15 +35,15 @@
                         </tr>
                     </thead>
                     <tbody class="table-secondary">
-                        <?php foreach($products as $product) : ?>
+                        <?php foreach($data as $dataCategory) : ?>
                         <tr class="text-center">
-                            <td><?php echo $product->id ?></td>
-                            <td><?php echo $product->name ?></td>
-                            <td><?php echo $product->created_at ?></td>
-                            <td><?php echo $product->updated_at ?></td>
+                            <td><?php echo $dataCategory->id ?></td>
+                            <td><?php echo $dataCategory->name ?></td>
+                            <td><?php echo $dataCategory->created_at ?></td>
+                            <td><?php echo $dataCategory->updated_at ?></td>
                             <td>
-                                <a href="edit.php?id=<?php echo $product->id ?>" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="destroy.php?id=<?php echo $product->id ?>" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="edit.php?id=<?php echo $dataCategory->id ?>" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="destroy.php?id=<?php echo $dataCategory->id ?>" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
